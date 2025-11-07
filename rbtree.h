@@ -22,12 +22,29 @@ typedef struct rb_tree_s {
 } rb_tree_t;
 
 const rb_node_p _rb_insert(rb_tree_t *tree, void *data, size_t data_size);
+/*
+ * rb_insert(rb_tree_t *tree, type *data)
+ * accepts a pointer to the data to be inserted.
+ * data will be copied into the tree node.
+ * type must be the actual type of the data being inserted.
+ */
 #ifndef rb_insert
 #define rb_insert(tree, data) _rb_insert(tree, data, sizeof(*(data)))
 #endif
 
+/*
+ * rb_erase(rb_tree_t *tree, rb_node_p n)
+ * removes the node n from the tree.
+ * the data inside the node will be freed, as well as the node itself.
+ */
 void rb_erase(rb_tree_t *tree, rb_node_p n);
 
+/*
+ * rb_create(rb_lt_f lt)
+ * accepts a comparison function lt that returns true if a < b.
+ * returns an empty red-black tree.
+ * will allocate memory on stack.
+ */
 rb_tree_t rb_create(rb_lt_f lt);
 
 #ifdef RBTREE_IMPL
